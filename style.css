@@ -29,7 +29,8 @@ body{
     height: 80px;
 }
 #course-head{
-    background-color: #5995fd;
+  color: #5995fd;
+  background-color: rgb(33, 37, 41);
 }
 .carousel-inner {
     padding: 1em;
