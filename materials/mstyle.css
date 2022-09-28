@@ -2,14 +2,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Heebo:wght@100;200;300;400;500;600;700;800;900&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
 
-:root {
-    --font1: 'Heebo', sans-serif;
-    --font2: 'Fira Sans Extra Condensed', sans-serif;
-    --font3: 'Roboto', sans-serif
-}
+
 
 body {
-    font-family: var(--font3);
+
     background-image: linear-gradient(120deg, #fdfbfb 0%, #ebedee 100%)
 }
 
@@ -140,14 +136,13 @@ h2 {
 }
 
 .btn-warning:hover {
-    background: none #ff962b;
+    
     color: #ffffff;
     box-shadow: -1px 6px 13px rgba(255, 150, 43, 0.35)
 }
 
 .bg-success {
     font-size: 1rem;
-    background-color: #f7810a !important
 }
 
 .bg-danger {
@@ -236,4 +231,7 @@ footer {
     color: black;
     font-family:Verdana, Geneva, Tahoma, sans-serif;
     font-weight: bold;
+}
+span{
+    color: #5995fd;
 }
