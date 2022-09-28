@@ -1,0 +1,118 @@
+<html>
+    <head>
+        <title>Student Connect</title>
+        <link rel="stylesheet" href="login.css">
+        <style>
+            .signUp{
+                text-decoration: none;
+                background-color: green;
+                padding: 6px;
+                margin: 6px;
+            }
+            .signIn{
+                text-decoration: none;
+            }
+        </style>
+    </head>
+    <body>
+         <div class="division1">
+            <input type="email" id="email" placeholder="Email" class="email"><br>
+            <input type="password" id="password" placeholder="Password" class="password"><br>
+            <a href="#" id="signUp" class="signUp">SignUp</a>
+            <a href="#" id="signIn" class="signIn">SignIn</a>
+         </div>
+    </body>
+
+
+    <script type="module">
+        // Import the functions you need from the SDKs you need
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-app.js";
+        import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-analytics.js";
+        import { getAuth, createUserWithEmailAndPassword,signInWithEmailAndPassword,onAuthStateChanged }  from "https://www.gstatic.com/firebasejs/9.10.0/firebase-auth.js";
+        import { getDatabase, ref, set } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-database.js";
+        // TODO: Add SDKs for Firebase products that you want to use
+        // https://firebase.google.com/docs/web/setup#available-libraries
+      
+        // Your web app's Firebase configuration
+        // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+        const firebaseConfig = {
+          apiKey: "AIzaSyAXK1OqdT_w-87Y2DFJhhe0EWQdl-E3fgg",
+          authDomain: "student-connect-cdafe.firebaseapp.com",
+          projectId: "student-connect-cdafe",
+          storageBucket: "student-connect-cdafe.appspot.com",
+          messagingSenderId: "696405092513",
+          appId: "1:696405092513:web:8ef843e289626db7a968e0",
+          measurementId: "G-6KZW84VQQ3",
+          databaseURL: "https://student-connect-cdafe-default-rtdb.firebaseio.com/"
+        };
+      
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const analytics = getAnalytics(app);
+
+        signUp.addEventListener('click', (e) => {
+
+            var email = document.getElementById('email').value;
+            var password = document.getElementById('password').value;
+            const auth = getAuth();
+            createUserWithEmailAndPassword(auth, email, password)
+                .then((userCredential) => {
+                    // Signed in 
+                    const user = userCredential.user;
+                    alert("SignUp Successful");
+                    // ...
+
+                })
+                .catch((error) => {
+                    const errorCode = error.code;
+                    const errorMessage = error.message;
+                    alert(errorMessage);
+                    // ..
+                });
+            });
+
+            signIn.addEventListener('click', (e) => {
+                var email = document.getElementById('email').value;
+                var password = document.getElementById('password').value;
+
+                const auth = getAuth();
+                signInWithEmailAndPassword(auth, email, password)
+                .then((userCredential) => {
+                    // Signed in 
+                    const user = userCredential.user;
+
+                    alert("Signed in successfully");
+                    let userEmail = user.email;
+                    let lastemail = userEmail.slice(-5);
+                    const compare = lastemail.localeCompare("ac.in");
+                    if(compare == 0){
+                        window.location.replace("enteringpage.html");
+                    }
+                    else{
+                        window.location.replace("index.html")
+                    }
+                    // ...
+                })
+                .catch((error) => {
+                    const errorCode = error.code;
+                    const errorMessage = error.message;
+                    alert(errorMessage);
+                });
+                });
+                const user = auth.currentUser;
+                onAuthStateChanged(auth, (user) => {
+                if (user) {
+                    // User is signed in, see docs for a list of available properties
+                    // https://firebase.google.com/docs/reference/js/firebase.User
+                    
+                    const uid = user.uid;
+                    window.location("index.html");
+                    // ...
+                } else {
+                    // User is signed out
+                    // ...
+                    alert("Your email or password is incorrect");
+                }
+        });
+      </script>
+</html>
