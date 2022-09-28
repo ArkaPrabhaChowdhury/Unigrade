@@ -1,6 +1,18 @@
 body{
     font-family: 'Roboto Condensed', sans-serif;
 }
+#logo{
+  height:2em;
+  width:2em;
+}
+#front{
+  height: 20em;
+  width: 26em;
+}
+#tag{
+  font-size: 2em;
+  font-family: 'Roboto Condensed', sans-serif;
+}
 .materialImg{
     width: 100px;
     height: 80px;
@@ -77,6 +89,7 @@ body{
 
   #name{
     color: #5995fd;
+    font-weight:800;
   }
 
 
