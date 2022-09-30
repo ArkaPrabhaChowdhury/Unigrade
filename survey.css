@@ -4,6 +4,10 @@ body{
 #mcq{
     font-family: 'Roboto Condensed', sans-serif;
 }
+#logo{
+  height:2em;
+  width:2em;
+}
 #nav{
     font-family: 'Roboto Condensed', sans-serif;
     background-color: rgb(33, 37, 41);
