@@ -21,6 +21,13 @@
 
 
   <title>UniGrade</title>
+  <link rel="icon" type="image/x-icon" href="logo.png">
+
+  <script>
+    function logout(){
+      window.location.replace("index.html");
+    }
+  </script>
   
 </head>
 
@@ -43,6 +50,12 @@
           </li>
           <li class="nav-item">
             <a class="nav-link active" target="_blank" aria-current="page" href="#course-head">Course Materials</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="userfile.html">Access Files</a>
+          </li>
+          <li class="nav-item">
+            <button class="nav-link active" aria-current="page" onclick="logout()" style="background-color: black;">LogOut</button>
           </li>
         </ul>
 
