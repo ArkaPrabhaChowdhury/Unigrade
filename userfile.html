@@ -32,6 +32,14 @@
         <div class="text-center">
             <img src="logo.png">
             <h1>UniGrade</h1>
+            <div class="container mt-3">
+                <table class="table table-dark">
+                    <thead>
+                        <th>Select FileName from Uploaded Files</th>
+                    </thead>
+                    <tbody id="tbody1"></tbody>
+                </table>
+            </div>
             <label style="margin-top: 3%; font-weight: bold;">FileName Without Extension</label><br>
             <input type="text" class="text-center" placeholder="FileName" id="namebox">
             <label id="extlab"></label>
@@ -44,14 +52,6 @@
             <a href="#" id="myAnchor" target="_blank" style="background-color: black; padding: 0.9%; text-decoration: none; color: white;">Open File</a><br><br>
         </div>
         <br><br>
-        <div class="container mt-3">
-            <table class="table table-dark">
-                <thead>
-                    <th>Select FileName from Uploaded Files</th>
-                </thead>
-                <tbody id="tbody1"></tbody>
-            </table>
-        </div>
         <img id="myimg" style="visibility: hidden;">
         <br><br>
     </body>
