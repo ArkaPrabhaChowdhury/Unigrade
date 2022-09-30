@@ -12,6 +12,7 @@ body{
 #front{
   height: 20em;
   width: 24em;
+  margin-left: -3em;
 }
 #tag{
   font-size: 2em;
