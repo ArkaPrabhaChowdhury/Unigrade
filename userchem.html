@@ -1,1 +1,162 @@
+<html>
+    <head>
+        <title>UniGrade</title>
+        <style>
+            img{
+                height: 200px;
+                width: 200px;
+                border: 2px solid black;
+            }
+            a{
+                text-decoration: none;
+                font-size: 20px;
+                color: white;
+            }
+            .atag{
+                background-color: black;
+                align-items: center;
+                text-align: center;
+                width: 200px;
+                margin: 6px;
+            }
+            p{
+                font-size: 20px;
+            }
+        </style>
 
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+        <link rel="stylesheet" href="userfile.css">
+        <link rel="icon" type="image/x-icon" href="logo.png">
+    </head>
+    <body>
+        <div class="text-center">
+            <img src="logo.png">
+            <h1>UniGrade</h1>
+            <div class="container mt-3">
+                <table class="table table-dark">
+                    <thead>
+                        <th>Select FileName from Uploaded Files</th>
+                    </thead>
+                    <tbody id="tbody1"></tbody>
+                </table>
+            </div>
+            <label style="margin-top: 3%; font-weight: bold;">FileName Without Extension</label><br>
+            <input type="text" class="text-center" placeholder="FileName" id="namebox">
+            <label id="extlab"></label>
+            <button id="downbtn" onclick="openVisible()" style="background-color: black; color: white;">Get File</button>
+        </div>
+        <br><br>
+        <p id="FileName" class="text-center" style="font-weight: bold;">Click on Open File when FileName appears here</p>
+        <br>
+        <div class="text-center" id="myDiv"> 
+            <a href="#" id="myAnchor" target="_blank" style="background-color: black; padding: 0.9%; text-decoration: none; color: white;">Open File</a><br><br>
+        </div>
+        <br><br>
+        
+        <img id="myimg" style="visibility: hidden;">
+        <br><br>
+    </body>
+    <script type="module">
+        // Import the functions you need from the SDKs you need
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-app.js";
+        import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-analytics.js";
+        import { getStorage, ref as sRef, uploadBytesResumable, getDownloadURL } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-storage.js";
+        import { getFirestore, doc, getDoc, getDocs, setDoc, collection, addDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-firestore.js";
+        // TODO: Add SDKs for Firebase products that you want to use
+        // https://firebase.google.com/docs/web/setup#available-libraries
+      
+        // Your web app's Firebase configuration
+        // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+        const firebaseConfig = {
+          apiKey: "AIzaSyAXK1OqdT_w-87Y2DFJhhe0EWQdl-E3fgg",
+          authDomain: "student-connect-cdafe.firebaseapp.com",
+          projectId: "student-connect-cdafe",
+          storageBucket: "student-connect-cdafe.appspot.com",
+          messagingSenderId: "696405092513",
+          appId: "1:696405092513:web:8ef843e289626db7a968e0",
+          measurementId: "G-6KZW84VQQ3",
+          databaseURL: "https://student-connect-cdafe-default-rtdb.firebaseio.com/"
+        };
+      
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const analytics = getAnalytics(app);
+        const clouddb = getFirestore();
+        var files = [];
+
+        var namebox = document.getElementById('namebox');
+        var extlab = document.getElementById('extlab');
+        var myimg = document.getElementById('myimg');
+        var DownBtn = document.getElementById('downbtn');
+        
+        function GetFileExt(file){
+            var temp = file.name.split('.');
+            var ext = temp.slice((temp.length-1),(temp.length));
+            return '.'+ext[0];
+        }
+
+        function GetFileName(file){
+            var temp = file.name.split('.');
+            var fname = temp.slice(0,-1).join('.');
+            return fname;
+        }
+
+
+        async function SaveURLtoFirestore(url){
+            var name = namebox.value;
+            var ext = extlab.innerHTML;
+
+            var ref = doc(clouddb, "ChemFiles/"+name);
+
+            await setDoc(ref, {
+                ImageName: (name+ext),
+                ImageURL: url
+            })
+        }
+
+        async function GetImagefromFirestore(){
+            var name = namebox.value;
+            var ref = doc(clouddb, "ChemFiles/"+name);
+            const docSnap = await getDoc(ref);
+            if(docSnap.exists()){
+                myimg.src = docSnap.data().ImageURL;
+                document.getElementById("myAnchor").href = docSnap.data().ImageURL;
+                document.getElementById("FileName").innerText = docSnap.data().ImageName
+            }
+        }
+
+        var tbody = document.getElementById("tbody1");
+
+        function AddItemToTable(link){
+            let trow = document.createElement("tr");
+            let td1 = document.createElement("td");
+            td1.innerHTML = link;
+            trow.appendChild(td1);
+            tbody.appendChild(trow);
+        }
+
+
+        function AddAllItemsToTable(linkslist){
+            tbody.innerHTML = "";
+            linkslist.forEach(element =>{
+                AddItemToTable(element.ImageName)
+            });
+        }
+        async function GetAllDataRealtime(){
+            const dbRef = collection(clouddb, "ChemFiles");
+            onSnapshot(dbRef, (querySnapshot)=>{
+                var fileName = [];
+
+                querySnapshot.forEach(doc => {
+                    fileName.push(doc.data());
+                });
+
+                AddAllItemsToTable(fileName);
+            })
+            
+
+        }
+        DownBtn.onclick = GetImagefromFirestore;
+        window.onload = GetAllDataRealtime;
+      </script>
+</html>
