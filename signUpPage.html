@@ -104,10 +104,10 @@
                 let lastemail = userEmail.slice(-5);
                 const compare = lastemail.localeCompare("ac.in");
                 if(compare == 0){
-                    window.location.replace("enteringpage.html");
+                    window.location.replace("adminhome.html");
                 }
                 else{
-                    window.location.replace("user.html")
+                    window.location.replace("main.html")
                 }
                 // ...
 
@@ -127,7 +127,7 @@
             // https://firebase.google.com/docs/reference/js/firebase.User
             
             const uid = user.uid;
-            window.location("Student Connect/enteringpage.html");
+            window.location("adminhome.html");
             // ...
         } else {
             // User is signed out
